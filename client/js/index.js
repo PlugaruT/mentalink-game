@@ -28,13 +28,13 @@ client.on('message', function(topic, message) {
         console.log(message.toString());
     } else if (topic == '/user/login') {
         obj = JSON.parse(message);
-        console.log(username_set);
+        console.log();
         if (!username_set) {
             if (obj.login) {
-              username_set = true;
+                username_set = true;
             } else {
-              console.log(obj);
-              alert('change username');
+                console.log(obj);
+                alert('change username');
             }
         }
     }
