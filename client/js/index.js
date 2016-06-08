@@ -27,23 +27,45 @@ client.on('connect', function() {
     client.subscribe('/user/login');
     client.subscribe('/user/' + id);
     client.subscribe('/user/list');
+    client.subscribe('/user/game/' + id);
+    client.subscribe('/game/start');
+    client.subscribe('/game/image');
 });
 
 
 function sendName() {
-    nickName = document.getElementById('nickname').value;
+    var nickName = document.getElementById('nickname').value;
     var info = '{ "user_name" : "' + nickName + '", "login": false, "token": "' + id + '" }';
     console.log(info)
     client.publish('/user/connect', info);
 }
 
+function startGame() {
+    var info = '{"token": "' + id + '"  }';
+    client.publish('/user/start', info);
+}
 
+function sendAnswer() {
+    if (document.body.contains(document.getElementById('answer'))) {
+        if (document.getElementById('img-link').src !== '') {
+            // document.getElementById('answer').disable = false;
+            // document.getElementById('submit-ans').disable = false;
+            var answer = document.getElementById('answer').value
+            var info = '{"token": "' + id + '", "guess": "' + answer + '" }';
+            console.log(info);
+        }
+    }
+}
 
 client.on('message', function(topic, message) {
-    if (topic == "/game") {
+    obj = JSON.parse(message);
+    if (topic == "/game/start") {
+        ipc.send('game-page');
         console.log(message.toString());
+        if (document.body.contains(document.getElementById('game-status'))) {
+            document.getElementById('game-status').innerHTML = obj.info;
+        }
     } else if (topic == '/user/' + id) {
-        obj = JSON.parse(message);
         console.log(obj);
         if (obj.login) {
             ipc.send('lobby-page');
@@ -52,13 +74,15 @@ client.on('message', function(topic, message) {
             alert('Enter another username');
         }
     } else if (topic == '/user/list') {
-        user_list = JSON.parse(message);
-        if (user_list.users_number >= 2) {
+        if (obj.users_number >= 2) {
             if (document.body.contains(document.getElementById('btn-lobby'))) {
-              document.getElementById('lobby-info').innerHTML = 'You can start the game';
-              document.getElementById('btn-lobby').disabled = false;
+                document.getElementById('lobby-info').innerHTML = 'You can start the game';
+                document.getElementById('btn-lobby').disabled = false;
             }
         }
+    } else if (topic == '/game/image') {
+        document.getElementById('img-link').src = obj.image;
+        console.log(obj);
     }
     // console.log(message.toString());
     // client.end();

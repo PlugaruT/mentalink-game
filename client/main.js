@@ -38,6 +38,10 @@ ipc.on('game-page', function(e){
   mainWindow.show()
 })
 
+ipc.on('refresh', function(e){
+  mainWindow.reload()
+  mainWindow.show()
+})
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
