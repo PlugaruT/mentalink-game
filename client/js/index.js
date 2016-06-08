@@ -53,6 +53,8 @@ function sendAnswer() {
             var answer = document.getElementById('answer').value
             var info = '{"token": "' + id + '", "guess": "' + answer + '" }';
             console.log(info);
+            client.publish('/game/guess', info);
+            document.getElementById('answer').value = '';
         }
     }
 }
