@@ -30,13 +30,14 @@ client.on('connect', function() {
     client.subscribe('/user/game/' + id);
     client.subscribe('/game/start');
     client.subscribe('/game/image');
+    client.subscribe('/game/win');
 });
 
 
 function sendName() {
     var nickName = document.getElementById('nickname').value;
     var info = '{ "user_name" : "' + nickName + '", "login": false, "token": "' + id + '" }';
-    console.log(info)
+    // console.log(info)
     client.publish('/user/connect', info);
 }
 
@@ -52,7 +53,7 @@ function sendAnswer() {
             // document.getElementById('submit-ans').disable = false;
             var answer = document.getElementById('answer').value
             var info = '{"token": "' + id + '", "guess": "' + answer + '" }';
-            console.log(info);
+            // console.log(info);
             client.publish('/game/guess', info);
             document.getElementById('answer').value = '';
         }
@@ -63,12 +64,11 @@ client.on('message', function(topic, message) {
     obj = JSON.parse(message);
     if (topic == "/game/start") {
         ipc.send('game-page');
-        console.log(message.toString());
         if (document.body.contains(document.getElementById('game-status'))) {
-            document.getElementById('game-status').innerHTML = obj.info;
+            document.getElementById('game-status').innerHTML = obj.info.toString();
         }
     } else if (topic == '/user/' + id) {
-        console.log(obj);
+        // console.log(obj);
         if (obj.login) {
             ipc.send('lobby-page');
         } else {
@@ -84,7 +84,9 @@ client.on('message', function(topic, message) {
         }
     } else if (topic == '/game/image') {
         document.getElementById('img-link').src = obj.image;
-        console.log(obj);
+        // console.log(obj);
+    } else if (topic == '/game/win') {
+        console.log(obj.info);
     }
     // console.log(message.toString());
     // client.end();
