@@ -1,4 +1,5 @@
 var mqtt = require('mqtt');
+var ipc = require('electron').ipcRenderer;
 var options = {
     host: '139.59.161.37',
     port: 1883,
@@ -25,7 +26,7 @@ client.on('connect', function() {
     client.subscribe('/game');
     client.subscribe('/user/login');
     client.subscribe('/user/' + id);
-    client.subscribe('/user/list' + id);
+    client.subscribe('/user/list');
 });
 
 
@@ -37,6 +38,7 @@ function sendName() {
 }
 
 
+
 client.on('message', function(topic, message) {
     if (topic == "/game") {
         console.log(message.toString());
@@ -44,15 +46,18 @@ client.on('message', function(topic, message) {
         obj = JSON.parse(message);
         console.log(obj);
         if (obj.login) {
-            document.getElementById('btn-connect').disabled = false;
+            ipc.send('lobby-page');
         } else {
             document.getElementById('nickname').value = '';
             alert('Enter another username');
         }
-    } else if (topic == '/user/list' + id) {
+    } else if (topic == '/user/list') {
         user_list = JSON.parse(message);
         if (user_list.users_number >= 2) {
-            document.getElementById('btn-lobby').disabled = false;
+            if (document.body.contains(document.getElementById('btn-lobby'))) {
+              document.getElementById('lobby-info').innerHTML = 'You can start the game';
+              document.getElementById('btn-lobby').disabled = false;
+            }
         }
     }
     // console.log(message.toString());

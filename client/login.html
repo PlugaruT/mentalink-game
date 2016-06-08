@@ -13,43 +13,44 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-1 col-xs-1">
-                <a href="login.html"><h1><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></h1></a>
-            </div>
-            <div class="col-md-10 col-xs-10">
-                <div class="page-header text-center">
-                    <h3>Mentalink Game</h3>
-                      <span class="label label-danger pull-center" id="status-icon">&nbsp;&nbsp;</span>
+    <div id="login-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1 col-xs-1">
+
+                </div>
+                <div class="col-md-10 col-xs-10">
+                    <div class="page-header text-center">
+                        <h3>Mentalink Game Login</h3>
+                        <span class="label label-danger pull-center" id="status-icon">&nbsp;&nbsp;</span>
+                    </div>
+                </div>
+                <div class="col-md-1 col-xs-1">
+                  
                 </div>
             </div>
-            <div class="col-md-1 col-xs-1">
-                <a href="index.html"><h1><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></h1></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6 text-center">
-                <!-- <button type="button" class="btn btn-primary btn-sm" id="btn-connect">Connect</button> -->
-                <!-- <button type="button" class="btn btn-primary btn-sm" id="btn-disconnect">Disconnect</button> -->
-                <!-- <span class="label label-danger pull-center">&nbsp;&nbsp;</span> -->
-                <br>
-                <br>
-                <div class="text-center">
-                    <input type="text" class="form-control" id="nickname" placeholder="Nickname">
+            <div class="row">
+                <div class="col-md-3">
                 </div>
-                <div>
+                <div class="col-md-6 text-center">
                     <br>
                     <br>
-                    <a>
-                        <button type="button" class="btn btn-success btn-lg" id="btn-username" onclick="sendName()">Submit Username</button>
-                        <a href="lobby.html"><button type="button" class="btn btn-success btn-lg" id="btn-connect" disabled="true">Enter Lobby</button></a>
-                    </a>
+                    <div class="text-center">
+                        <input type="text" class="form-control" id="nickname" placeholder="Nickname">
+                    </div>
+                    <div>
+                        <br>
+                        <br>
+                        <a>
+                            <button type="button" class="btn btn-success btn-lg" id="btn-username" onclick="sendName()">Submit Username</button>
+                            <a href="lobby.html">
+                                <button type="button" class="btn btn-success btn-lg" id="btn-connect" style="display: none">Enter Lobby</button>
+                            </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
+                <div class="col-md-3">
+                </div>
             </div>
         </div>
     </div>

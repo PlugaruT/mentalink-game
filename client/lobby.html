@@ -16,25 +16,28 @@
     <div class="container">
         <div class="row">
             <div class="col-md-1 col-xs-1">
-                <a href="login.html"><h1><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></h1></a>
+
             </div>
             <div class="col-md-10 col-xs-10">
                 <div class="page-header text-center">
-                    <h3>Mentalink Game</h3>
+                    <h3>Mentalink Game Lobby</h3>
                       <span class="label label-danger pull-center" id="status-icon">&nbsp;&nbsp;</span>
                 </div>
             </div>
             <div class="col-md-1 col-xs-1">
-                <a href="index.html"><h1><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></h1></a>
+
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
             </div>
             <div class="col-md-6 text-center">
+              <div id="lobby-info">
+                No Player to start the game
+              </div>
                 <div>
                     <a>
-                        <button type="button" class="btn btn-success btn-lg" id="btn-lobby" disabled="true">Start Game</button>
+                        <button type="button" class="btn btn-success btn-lg" id="btn-lobby" disabled="true" onclick="ipc.send('game-page')">Start Game</button>
                     </a>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 const electron = require('electron')
+var ipc = require('electron').ipcMain;
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -27,6 +28,16 @@ function createWindow () {
   })
 }
 
+ipc.on('lobby-page', function(e){
+  mainWindow.loadURL(`file://${__dirname}/lobby.html`)
+  mainWindow.show()
+})
+
+ipc.on('game-page', function(e){
+  mainWindow.loadURL(`file://${__dirname}/index.html`)
+  mainWindow.show()
+})
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -40,6 +51,7 @@ app.on('window-all-closed', function () {
     app.quit()
   }
 })
+
 
 app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
