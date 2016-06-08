@@ -17,8 +17,7 @@ client.on('connect', function() {
 });
 
 function sendName() {
-    var info = '{ "user_name" : "' + document.getElementById('nickname').value + '" }';
-    // console.log(info);
+    var info = '{ "user_name" : "' + document.getElementById('nickname').value + '", "login": false }';
     client.publish('/user/connect', info);
 }
 
@@ -28,14 +27,13 @@ client.on('message', function(topic, message) {
         console.log(message.toString());
     } else if (topic == '/user/login') {
         obj = JSON.parse(message);
-        console.log();
-        if (!username_set) {
-            if (obj.login) {
-                username_set = true;
-            } else {
-                console.log(obj);
-                alert('change username');
-            }
+        console.log(obj);
+        if (obj.login) {
+            username_set = true;
+            document.getElementById('btn-connect').disabled = false
+        } else {
+            username_set = false;
+            alert('Enter another username');
         }
     }
     // console.log(message.toString());
