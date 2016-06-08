@@ -16,7 +16,8 @@ function generateID() {
 }
 
 var id = generateID();
-var username_set = false;
+var user_list = {};
+
 var client = mqtt.connect(options);
 client.on('connect', function() {
     document.getElementById("status-icon").classList.remove('label-danger');
@@ -24,14 +25,15 @@ client.on('connect', function() {
     client.subscribe('/game');
     client.subscribe('/user/login');
     client.subscribe('/user/' + id);
+    client.subscribe('/user/list' + id);
 });
 
 
 function sendName() {
-    var info = '{ "user_name" : "' + document.getElementById('nickname').value + '", "login": false, "token": "' + id + '" }';
+    nickName = document.getElementById('nickname').value;
+    var info = '{ "user_name" : "' + nickName + '", "login": false, "token": "' + id + '" }';
     console.log(info)
     client.publish('/user/connect', info);
-
 }
 
 
@@ -42,11 +44,15 @@ client.on('message', function(topic, message) {
         obj = JSON.parse(message);
         console.log(obj);
         if (obj.login) {
-            username_set = true;
-            document.getElementById('btn-connect').disabled = false
+            document.getElementById('btn-connect').disabled = false;
         } else {
-            username_set = false;
+            document.getElementById('nickname').value = '';
             alert('Enter another username');
+        }
+    } else if (topic == '/user/list' + id) {
+        user_list = JSON.parse(message);
+        if (user_list.users_number >= 2) {
+            document.getElementById('btn-lobby').disabled = false;
         }
     }
     // console.log(message.toString());
